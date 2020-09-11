@@ -3,27 +3,58 @@ https://leetcode.com/problems/longest-palindromic-substring/
 '''
 
 class Solution:
-    
-    def isPalindrome(self, s, n):
-        if n%2==0:
-            if(s[0:n//2]==s[n-1:n//2 - 1:-1]): return True
-        elif n%2!=0:
-            if(s[0:n//2]==s[n-1:n//2:-1]): return True
-        
-        return False
-    
     def longestPalindrome(self, s: str) -> str:
-        ls=len(s)
-        count=0
-        if s=="": return ""
-        lp=s[0]
-        for i in range(0,ls):
-            for j in range(i+1,ls):
-                if s[i]==s[j]:
-                    if self.isPalindrome(s[i:j+1],j-i+1):
-                        if(j-i+1)>count:
-                            lp=s[i:j+1]
-                            count=j-i+1
-        
-        return lp
-                
+        n=len(s)
+        if(n==0 or n==1 or (n==2 and s[0]==s[1])): return s
+        if n==2: return s[0]
+        max_len=0
+        max_str=""
+        for i in range(0,n):
+            l,r=0,0
+            
+            if(i>0 and s[i-1]==s[i]):
+                # print(1)
+                l=i-1
+                r=i
+                while(True):
+                    if((l-1)>=0 and (r+1)<n and s[l-1]==s[r+1]):
+                        l-=1
+                        r+=1
+                    else:
+                        break
+                if(r-l)>max_len:
+                    max_str=s[l:r+1]
+                    max_len=max(r-l,max_len)
+            
+            if(i<n-1 and s[i]==s[i+1]):
+                # print(2)
+                l=i
+                r=i+1
+                while(True):
+                    if((l-1)>=0 and (r+1)<n and s[l-1]==s[r+1]):
+                        l-=1
+                        r+=1
+                    else:
+                        break
+                if(r-l)>max_len:
+                    max_str=s[l:r+1]
+                    max_len=max(r-l,max_len)
+            if True:
+                if(i>0 and i<n-1 and s[i-1]==s[i+1]):
+                    # print(3)
+                    l=i-1
+                    r=i+1
+                    while(True):
+                        if((l-1)>=0 and (r+1)<n and s[l-1]==s[r+1]):
+                            l-=1
+                            r+=1
+                        else:
+                            break
+                    
+                    if(r-l)>max_len:
+                        max_str=s[l:r+1]
+                        max_len=max(r-l,max_len)
+            # print(max_len,max_str)
+        if max_str=="" and n>0:
+            max_str=s[0]
+        return max_str           
