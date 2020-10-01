@@ -19,7 +19,6 @@ class Solution:
             head=ListNode(vals[0])
             temp=head
             for i in range(1,len(vals)):
-                temp2=ListNode(vals[i])
-                temp.next=temp2
+                temp.next=ListNode(vals[i])
                 temp=temp.next
         return head
